@@ -6,9 +6,9 @@ function Item(props) {
     <React.Fragment>
       <div onClick ={() => props.whenItemClicked(props.id)}>
         <h3>{props.name}</h3>
-        <p>{props.description}</p>
-        <p>{props.price}</p>
-        <p>{props.quantity}</p>
+        <p>Description:{props.description}</p>
+        <p>Price: ${props.price}</p>
+        <p>Quantity: {props.quantity}</p>
       </div>
     </React.Fragment>
   )

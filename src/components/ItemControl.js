@@ -1,8 +1,9 @@
 import React from 'react';
 import ItemList from './ItemList';
-import AddItem from'./AddItem';
+//import AddItem from'./AddItem';
 import ItemCreationForm from './ItemCreationForm';
 import ItemDetails from './ItemDetails';
+
 
 class ItemControl extends React.Component {
   constructor(props) {
@@ -17,9 +18,16 @@ class ItemControl extends React.Component {
   }
 
   handleClick = () => { 
-    this.setState(prevState => ({
-      formVisibleOnPage: !prevState.formVisibleOnPage
-    }));
+    if (this.state.selectedItem != null){
+      this.setState({
+        formVisibleOnPage: false,
+        selectedItem: null
+      });
+    } else {
+      this.setState(prevState => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage
+      }));
+    }
   }
 
   handleAddingNewItemToList = (newItem) => {
@@ -36,6 +44,7 @@ class ItemControl extends React.Component {
   }
 
   render() {
+    
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.selectedItem != null){
