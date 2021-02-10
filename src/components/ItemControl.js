@@ -9,7 +9,8 @@ class ItemControl extends React.Component {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      masterItemList: []
+      masterItemList: [],
+      selectedItem: null
     // Initial state definitions will go here
     };
     this.handleClick = this.handleClick.bind(this);
@@ -29,16 +30,23 @@ class ItemControl extends React.Component {
     });
   }
 
-
+  handleChangingSelectedItem = (id) => {
+    const selectedItem = this.state.masterItemList.filter(item => item.id === id)[0];
+    this.setState({selectedItem: selectedItem});
+  }
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.formVisibleOnPage) {
+    if (this.state.selectedItem != null){
+      currentlyVisibleState = <ItemDetails item = {this.state.selectedItem}/>
+      buttonText = "Return to Item List";
+    }
+    else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <ItemCreationForm onNewItemCreation={this.handleAddingNewItemToList}/>;
       buttonText = "Return to Item List";
     } else {
-      currentlyVisibleState = <ItemList itemList={this.state.masterItemList}/>;
+      currentlyVisibleState = <ItemList itemList={this.state.masterItemList} onItemSelection={this.handleChangingSelectedItem}/>;
       buttonText = "Add Item";
     }
     // Conditional change state actions go here using callbacks of event handlers

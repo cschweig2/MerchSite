@@ -1,5 +1,6 @@
 import React from 'react';
 import Item from './Item';
+import PropTypes from "prop-types";
 
 // const tempItem = [
 //   {
@@ -13,15 +14,21 @@ import Item from './Item';
 function ItemList(props) {
   return(
     <React.Fragment>
-      {props.itemList.map((item, index) =>
+      {props.itemList.map((item) =>
         <Item name={item.name}
         description={item.description}
         price={item.price}
         quantity={item.quantity}
-        key={index}/>
+        id={item.id}
+        key={item.id}/>
       )}
     </React.Fragment>
   );
+}
+
+ItemList.propTpyes = {
+  itemList: PropTypes.array,
+  onItemSelection: PropTypes.func
 }
 
 export default ItemList;
