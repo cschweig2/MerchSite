@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# User Stories
+
+A user should be able to do the following:
+
+1. Create, Read, Update and Delete items in the store. Items should have fields for name, description, and quantity (along with any other fields you wish to add).
+
+2. Increase or decrease the quantity of an item in the store. For instance, if a user clicks "Buy", the q3. uantity will decrease by one. If a user clicks "Restock", it will increment by a specified number.
+
+3. When the quantity of an item is reduced to 0, the item should say "Out of Stock". A user should not be able to reduce the quantity of an item below 0.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
