@@ -43,12 +43,20 @@ class ItemControl extends React.Component {
     this.setState({selectedItem: selectedItem});
   }
 
+  handleDeletingItem = (id) => {
+    const newMasterItemList = this.state.masterItemList.filter(item => item.id !== id);
+    this.setState({
+      masterItemList: newMasterItemList,
+      selectedItem: null
+    });
+  }
+
   render() {
     
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.selectedItem != null){
-      currentlyVisibleState = <ItemDetails item = {this.state.selectedItem}/>
+      currentlyVisibleState = <ItemDetails item = {this.state.selectedItem} onClickingDelete = {this.handleDeletingItem}/>
       buttonText = "Return to Item List";
     }
     else if (this.state.formVisibleOnPage) {
