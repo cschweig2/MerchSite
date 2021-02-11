@@ -6,7 +6,12 @@ import ReusableForm from './ReusableForm';
 function ItemCreationForm(props) {
   function handleNewItemFormSubmission(e){
     e.preventDefault();
-    props.onNewItemCreation({name: e.target.name.value, description: e.target.description.value, price: e.target.price.value, quantity: e.target.quantity.value, id: v4()});
+    props.onNewItemCreation({
+      name: e.target.name.value, 
+      description: e.target.description.value, 
+      price: e.target.price.value, 
+      quantity: e.target.quantity.value, 
+      id: v4()});
   }
   return(
     <>

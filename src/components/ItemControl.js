@@ -6,12 +6,22 @@ import ItemDetails from './ItemDetails';
 import EditItemForm from './EditItemForm';
 
 
+
 class ItemControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      masterItemList: [],
+      masterItemList: [
+        {
+        name: "Coozie",
+        description: "your drink is cold",
+        price: "200",
+        quantity: "500",
+        id: 1,
+        key: 3
+        }
+      ],
       selectedItem: null,
       editing: false
     };
@@ -27,7 +37,7 @@ class ItemControl extends React.Component {
       });
     } else {
       this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
+        formVisibleOnPage: !prevState.formVisibleOnPage,
       }));
     }
   }
@@ -58,6 +68,8 @@ class ItemControl extends React.Component {
     this.setState({editing: true});
   }
 
+  
+
   handleEditingItemInList = (itemToEdit) => {
     const editedMasterItemList = this.state.masterItemList
       .filter(item => item.id !== this.state.selectedItem.id)
@@ -74,14 +86,17 @@ class ItemControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
     if(this.state.editing){
-      currentlyVisibleState = <EditItemForm item = {this.state.selectedItem} onEditItem = {this.handleEditingItemInList}/>
+      currentlyVisibleState = 
+      <EditItemForm 
+      item = {this.state.selectedItem} 
+      onEditItem = {this.handleEditingItemInList}/>
       buttonText = "Return to Item List";
     } else if (this.state.selectedItem != null){
       currentlyVisibleState = 
       <ItemDetails 
       item = {this.state.selectedItem} 
       onClickingDelete = {this.handleDeletingItem}
-      onCLickingEdit = {this.handleEditClick}/>
+      onClickingEdit = {this.handleEditClick} />
       buttonText = "Return to Item List";
     }
     else if (this.state.formVisibleOnPage) {
@@ -91,7 +106,7 @@ class ItemControl extends React.Component {
       currentlyVisibleState = <ItemList itemList={this.state.masterItemList} onItemSelection={this.handleChangingSelectedItem}/>;
       buttonText = "Add Item";
     }
-    // Conditional change state actions go here using callbacks of event handlers
+
     return(
       <React.Fragment>
         {currentlyVisibleState}
@@ -100,7 +115,5 @@ class ItemControl extends React.Component {
     )
   }
 }
-
-//PropTypes will go here
 
 export default ItemControl;
