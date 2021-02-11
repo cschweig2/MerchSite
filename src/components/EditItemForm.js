@@ -1,5 +1,4 @@
 import React from 'react';
-import ReusableForm from './ReusableForm';
 import PropTypes from 'prop-types';
 
 function EditItemForm(props){
@@ -17,10 +16,30 @@ function EditItemForm(props){
 
   return (
     <>
-      <ReusableForm
-      formSubmissionHandler={handleEditItemFormSubmission}
-      buttonText="Update Item"/>
+      <form onSubmit={handleEditItemFormSubmission}>
+        <input
+          type='text'
+          name='name'
+          defaultValue={item.name}
+          placeholder="Item Name"/>
+        <textarea
+          name='description'
+          defaultValue= {item.description}
+          placeholder='Item Description' />
+        <input
+          type='float'
+          name='price'
+          defaultValue={parseFloat(item.price)}
+          placeholder='Item Price' />
+        <input
+          type='number'
+          name='quantity'
+          defaultValue={parseInt(item.quantity)}
+          placeholder='Item Quantity' />
+        <button type="submit">Update Item</button>
+      </form>
     </>
+    
   );
 }
 

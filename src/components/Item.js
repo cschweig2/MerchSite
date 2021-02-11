@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 function Item(props) {
+  let quantity = props.quantity;
+  if(parseInt(quantity) === 0){
+    quantity = 'out of stock';
+  }
   return(
     <React.Fragment>
       <div onClick ={() => props.whenItemClicked(props.id)}>
-        <h3>{props.name}</h3>
-        <p>Description:{props.description}</p>
-        <p>Price: ${props.price}</p>
-        <p>Quantity: {props.quantity}</p>
+        <li>{props.name} : {quantity}</li>
       </div>
     </React.Fragment>
   )
@@ -17,8 +18,8 @@ function Item(props) {
 Item.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
-  price: PropTypes.string,
-  quantity: PropTypes.string,
+  price: PropTypes.number,
+  quantity: PropTypes.number.isRequired,
   whenItemClicked: PropTypes.func
 }
 

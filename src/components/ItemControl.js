@@ -16,8 +16,8 @@ class ItemControl extends React.Component {
         {
         name: "Coozie",
         description: "your drink is cold",
-        price: "200",
-        quantity: "500",
+        price: 200,
+        quantity: 10,
         id: 1,
         key: 3
         }
@@ -68,7 +68,14 @@ class ItemControl extends React.Component {
     this.setState({editing: true});
   }
 
-  
+  handleChangeItemQuantityClick = (itemToEdit) => {
+    const editedMasterItemList = this.state.masterItemList
+      .filter(item => item.id !== this.state.selectedItem.id)
+      .concat(itemToEdit);
+    this.setState({
+      masterItemList: editedMasterItemList,
+    });
+  }
 
   handleEditingItemInList = (itemToEdit) => {
     const editedMasterItemList = this.state.masterItemList
@@ -96,7 +103,8 @@ class ItemControl extends React.Component {
       <ItemDetails 
       item = {this.state.selectedItem} 
       onClickingDelete = {this.handleDeletingItem}
-      onClickingEdit = {this.handleEditClick} />
+      onClickingEdit = {this.handleEditClick} 
+      onChangingItemQuantityClick = {this.handleChangeItemQuantityClick}/>
       buttonText = "Return to Item List";
     }
     else if (this.state.formVisibleOnPage) {
@@ -109,6 +117,8 @@ class ItemControl extends React.Component {
 
     return(
       <React.Fragment>
+        {this.state.masterItemList[0] === undefined && 
+        currentlyVisibleState.props.items !== undefined ? "There are no items currently in the store." : ""}
         {currentlyVisibleState}
         <button onClick={this.handleClick}>{buttonText}</button>
       </ React.Fragment>

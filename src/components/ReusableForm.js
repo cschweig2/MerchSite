@@ -13,11 +13,11 @@ function ReusableForm(props) {
           name='description'
           placeholder='Item Description' />
         <input
-          type='text'
+          type='float'
           name='price'
           placeholder='Item Price' />
         <input
-          type='text'
+          type='number'
           name='quantity'
           placeholder='Item Quantity' />
         <button type="submit">{props.buttonText}</button>

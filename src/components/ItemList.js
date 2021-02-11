@@ -13,8 +13,8 @@ function ItemList(props) {
         whenItemClicked = {props.onItemSelection}
         name={item.name}
         description={item.description}
-        price={item.price}
-        quantity={item.quantity}
+        price={parseInt(item.price)}
+        quantity={parseInt(item.quantity)}
         id={item.id}
         key={item.id}/>
       )}
