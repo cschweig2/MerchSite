@@ -3,7 +3,6 @@ import ItemControl from './ItemControl';
 
 function Body(){
   return(
-    
     <ItemControl/>
   )
 }
