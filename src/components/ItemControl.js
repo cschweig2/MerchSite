@@ -56,7 +56,8 @@ class ItemControl extends React.Component {
   }
 
   handleDeletingItem = (id) => {
-    const newMasterItemList = this.state.masterItemList.filter(item => item.id !== id);
+    const newMasterItemList = this.state.masterItemList
+    .filter(item => item.id !== id);
     this.setState({
       masterItemList: newMasterItemList,
       selectedItem: null
@@ -111,7 +112,10 @@ class ItemControl extends React.Component {
       currentlyVisibleState = <ItemCreationForm onNewItemCreation={this.handleAddingNewItemToList}/>;
       buttonText = "Return to Item List";
     } else {
-      currentlyVisibleState = <ItemList itemList={this.state.masterItemList} onItemSelection={this.handleChangingSelectedItem}/>;
+      currentlyVisibleState = 
+      <ItemList 
+      itemList={this.state.masterItemList} 
+      onItemSelection={this.handleChangingSelectedItem}/>;
       buttonText = "Add Item";
     }
 
