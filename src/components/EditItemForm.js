@@ -27,7 +27,8 @@ function EditItemForm(props){
           defaultValue= {item.description}
           placeholder='Item Description' />
         <input
-          type='float'
+            type='number'
+            step="0.01"
           name='price'
           defaultValue={parseFloat(item.price)}
           placeholder='Item Price' />

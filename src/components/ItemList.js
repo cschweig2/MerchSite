@@ -8,7 +8,7 @@ function ItemList(props) {
   
   return(
     <React.Fragment>
-      {props.itemList.map((item) =>
+      {Object.values(props.itemList).map((item) =>
         <Item 
         whenItemClicked = {props.onItemSelection}
         name={item.name}
@@ -23,7 +23,7 @@ function ItemList(props) {
 }
 
 ItemList.propTpyes = {
-  itemList: PropTypes.array,
+  itemList: PropTypes.object,
   onItemSelection: PropTypes.func
 }
 

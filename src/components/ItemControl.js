@@ -7,8 +7,6 @@ import EditItemForm from './EditItemForm';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-
-
 class ItemControl extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +17,7 @@ class ItemControl extends React.Component {
     };
   }
 
-  handleClick = () => { 
+  handleClick = () => {
     if (this.state.selectedItem != null){
       this.setState({
         formVisibleOnPage: false,
@@ -69,18 +67,18 @@ class ItemControl extends React.Component {
   }
 
   handleChangingSelectedItem = (id) => {
-    const selectedItem = this.state.masterItemList.filter(item => item.id === id)[0];
+    const selectedItem = this.props.masterItemList[id];
     this.setState({selectedItem: selectedItem});
   }
 
   handleDeletingItem = (id) => {
-   const { dispatch } = this.props;
-   const action = {
-     type: 'DELETE_ITEM',
-     id: id
-   }
-   dispatch(action);
-   this.setState({selectedItem: null});
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_ITEM',
+      id: id
+    }
+    dispatch(action);
+    this.setState({selectedItem: null});
   }
 
   handleEditClick = () => {
@@ -89,32 +87,37 @@ class ItemControl extends React.Component {
   }
 
   handleChangeItemQuantityClick = (itemToEdit) => {
-    const editedMasterItemList = this.state.masterItemList
-      .filter(item => item.id !== this.state.selectedItem.id)
-      .concat(itemToEdit);
+    const { dispatch } = this.props;
+    const { id, name, description, price, quantity } = itemToEdit;
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      name: name,
+      description: description,
+      price: price,
+      quantity: quantity,
+    }
+    dispatch(action);
     this.setState({
-      masterItemList: editedMasterItemList,
     });
   }
 
-  
-
   render() {
-    
+
     let currentlyVisibleState = null;
     let buttonText = null;
     if(this.state.editing){
-      currentlyVisibleState = 
-      <EditItemForm 
-      item = {this.state.selectedItem} 
+      currentlyVisibleState =
+      <EditItemForm
+      item = {this.state.selectedItem}
       onEditItem = {this.handleEditingItemInList}/>
       buttonText = "Return to Item List";
     } else if (this.state.selectedItem != null){
-      currentlyVisibleState = 
-      <ItemDetails 
-      item = {this.state.selectedItem} 
+      currentlyVisibleState =
+      <ItemDetails
+      item = {this.state.selectedItem}
       onClickingDelete = {this.handleDeletingItem}
-      onClickingEdit = {this.handleEditClick} 
+      onClickingEdit = {this.handleEditClick}
       onChangingItemQuantityClick = {this.handleChangeItemQuantityClick}/>
       buttonText = "Return to Item List";
     }
@@ -122,16 +125,16 @@ class ItemControl extends React.Component {
       currentlyVisibleState = <ItemCreationForm onNewItemCreation={this.handleAddingNewItemToList}/>;
       buttonText = "Return to Item List";
     } else {
-      currentlyVisibleState = 
-      <ItemList 
-      itemList={this.state.masterItemList} 
+      currentlyVisibleState =
+      <ItemList
+      itemList={this.props.masterItemList}
       onItemSelection={this.handleChangingSelectedItem}/>;
       buttonText = "Add Item";
     }
 
     return(
       <React.Fragment>
-        {this.state.masterItemList[0] === undefined && 
+        {this.props.masterItemList[0] === undefined &&
         currentlyVisibleState.props.items !== undefined ? "There are no items currently in the store." : ""}
         {currentlyVisibleState}
         <button onClick={this.handleClick}>{buttonText}</button>

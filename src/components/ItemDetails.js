@@ -13,6 +13,7 @@ function ItemDetail(props){
     props.onChangingItemQuantityClick({
       name: item.name,
       description: item.description,
+      price: item.price,
       quantity: isSub ? (item.quantity === 0 ? 0 : item.quantity = parseInt(item.quantity) - dif) : item.quantity = parseInt(item.quantity) + dif,
       id: item.id
     });
