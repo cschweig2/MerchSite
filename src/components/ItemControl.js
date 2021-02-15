@@ -5,6 +5,7 @@ import ItemCreationForm from './ItemCreationForm';
 import ItemDetails from './ItemDetails';
 import EditItemForm from './EditItemForm';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 
 
@@ -16,7 +17,6 @@ class ItemControl extends React.Component {
       selectedItem: null,
       editing: false
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick = () => { 
@@ -50,18 +50,37 @@ class ItemControl extends React.Component {
     });
   }
 
+  handleEditingItemInList = (itemToEdit) => {
+    const { dispatch } = this.props;
+    const { id, name, description, price, quantity } = itemToEdit;
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      name: name,
+      description: description,
+      price: price,
+      quantity: quantity,
+    }
+    dispatch(action);
+    this.setState({
+      editing: false,
+      selectedItem: null
+    });
+  }
+
   handleChangingSelectedItem = (id) => {
     const selectedItem = this.state.masterItemList.filter(item => item.id === id)[0];
     this.setState({selectedItem: selectedItem});
   }
 
   handleDeletingItem = (id) => {
-    const newMasterItemList = this.state.masterItemList
-    .filter(item => item.id !== id);
-    this.setState({
-      masterItemList: newMasterItemList,
-      selectedItem: null
-    });
+   const { dispatch } = this.props;
+   const action = {
+     type: 'DELETE_ITEM',
+     id: id
+   }
+   dispatch(action);
+   this.setState({selectedItem: null});
   }
 
   handleEditClick = () => {
@@ -78,16 +97,7 @@ class ItemControl extends React.Component {
     });
   }
 
-  handleEditingItemInList = (itemToEdit) => {
-    const editedMasterItemList = this.state.masterItemList
-      .filter(item => item.id !== this.state.selectedItem.id)
-      .concat(itemToEdit);
-    this.setState({
-      masterItemList: editedMasterItemList,
-      editing: false,
-      selectedItem: null
-    });
-  }
+  
 
   render() {
     
@@ -129,7 +139,14 @@ class ItemControl extends React.Component {
     )
   }
 }
-
-TicketControl = connect()(TicketControl);
+ItemControl.propTypes = {
+  masterItemList: PropTypes.object
+};
+const mapStateToProps = state => {
+  return {
+    masterItemList: state
+  }
+}
+ItemControl = connect(mapStateToProps)(ItemControl);
 
 export default ItemControl;
