@@ -1,6 +1,5 @@
 import React from 'react';
 import ItemList from './ItemList';
-//import AddItem from'./AddItem';
 import ItemCreationForm from './ItemCreationForm';
 import ItemDetails from './ItemDetails';
 import EditItemForm from './EditItemForm';
@@ -11,7 +10,7 @@ class ItemControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
+      // formVisibleOnPage: false, - no longer needed, handled by Redux
       selectedItem: null,
       editing: false
     };
@@ -20,14 +19,16 @@ class ItemControl extends React.Component {
   handleClick = () => {
     if (this.state.selectedItem != null){
       this.setState({
-        formVisibleOnPage: false,
+        // formVisibleOnPage: false,
         selectedItem: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage,
-      }));
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action)
     }
   }
 
@@ -43,9 +44,10 @@ class ItemControl extends React.Component {
       quantity: quantity,
     }
     dispatch(action);
-    this.setState({
-      formVisibleOnPage: false
-    });
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
   }
 
   handleEditingItemInList = (itemToEdit) => {
@@ -121,7 +123,7 @@ class ItemControl extends React.Component {
       onChangingItemQuantityClick = {this.handleChangeItemQuantityClick}/>
       buttonText = "Return to Item List";
     }
-    else if (this.state.formVisibleOnPage) {
+    else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <ItemCreationForm onNewItemCreation={this.handleAddingNewItemToList}/>;
       buttonText = "Return to Item List";
     } else {
@@ -142,14 +144,19 @@ class ItemControl extends React.Component {
     )
   }
 }
+
 ItemControl.propTypes = {
-  masterItemList: PropTypes.object
+  masterItemList: PropTypes.object,
+  formVisibleOnPage: PropTypes.bool
 };
+
 const mapStateToProps = state => {
   return {
-    masterItemList: state
+    masterItemList: state.masterItemList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
+
 ItemControl = connect(mapStateToProps)(ItemControl);
 
 export default ItemControl;
